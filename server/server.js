@@ -5,6 +5,8 @@ const atsRoutes = require("./routes/ats");
 const connectDB = require('./config/db');
 const dotenv = require("dotenv");
 const resumeRoutes = require('./routes/resumeRoutes');
+const authRoutes = require('./routes/auth');
+// const userRoutes = require('./routes/userRoutes');
 
 connectDB();
 dotenv.config();
@@ -16,6 +18,8 @@ app.use(express.json());
 app.use("/api/upload", uploadRoutes);
 app.use("/api/ats", atsRoutes);
 app.use('/api/resumes', resumeRoutes);
+app.use('/api/auth', authRoutes);
+// app.use('/api/users', userRoutes);
 
 
 

@@ -1,45 +1,59 @@
 function Template3({ data }) {
+  const toListItems = (text = '') =>
+    text.split(',').map((item) => item.trim()).filter(Boolean);
+
   return (
-    <div className="max-w-2xl mx-auto text-gray-900 p-10 font-sans space-y-8 border border-gray-300 rounded-xl shadow-md">
-      {/* Header */}
-      <header className="border-b border-gray-300 pb-4">
-        <h1 className="text-4xl font-bold">{data.name || 'Your Name'}</h1>
-        <p className="text-sm text-gray-600 mt-1">
-          {data.email || 'email@example.com'} &nbsp;|&nbsp; {data.phone || '+1 555 123 4567'}
-        </p>
-      </header>
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden font-sans flex flex-col md:flex-row">
+      {/* Sidebar */}
+      <aside className="bg-pink-600 text-white p-8 md:w-1/3">
+        <h1 className="text-4xl font-bold mb-2">{data.name || 'Your Name'}</h1>
+        <p className="text-pink-200 mb-4">{data.email || 'email@example.com'}</p>
+        <p className="text-pink-200">{data.phone || '+1 555 123 4567'}</p>
 
-      {/* Summary */}
-      <div>
-        <h2 className="text-lg font-semibold uppercase tracking-wide text-gray-800 border-b border-gray-200 pb-1">Professional Summary</h2>
-        <p className="mt-2 text-sm whitespace-pre-line">
-          {data.summary || 'A brief summary about your career and achievements.'}
-        </p>
-      </div>
+        <div className="mt-10">
+          <h2 className="text-lg font-semibold mb-2 border-b border-pink-400 pb-1">Skills</h2>
+          <div className="flex flex-wrap gap-2">
+            {toListItems(data.skills).length > 0 ? (
+              toListItems(data.skills).map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="bg-pink-300 text-pink-800 px-3 py-1 rounded-full text-xs font-semibold"
+                >
+                  {skill}
+                </span>
+              ))
+            ) : (
+              <p className="text-pink-200">Your skills here.</p>
+            )}
+          </div>
+        </div>
+      </aside>
 
-      {/* Experience */}
-      <div>
-        <h2 className="text-lg font-semibold uppercase tracking-wide text-gray-800 border-b border-gray-200 pb-1">Experience</h2>
-        <p className="mt-2 text-sm whitespace-pre-line">
-          {data.experience || 'Details about your previous roles and contributions.'}
-        </p>
-      </div>
+      {/* Main content */}
+      <main className="p-8 md:w-2/3 text-gray-900">
+        <section className="mb-8">
+          <h2 className="text-xl font-bold border-b border-gray-300 pb-2 mb-3">Professional Summary</h2>
+          <p className="whitespace-pre-line">{data.summary || 'Brief summary about your career.'}</p>
+        </section>
 
-      {/* Education */}
-      <div>
-        <h2 className="text-lg font-semibold uppercase tracking-wide text-gray-800 border-b border-gray-200 pb-1">Education</h2>
-        <p className="mt-2 text-sm whitespace-pre-line">
-          {data.education || 'Academic qualifications, institutions, and dates.'}
-        </p>
-      </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-bold border-b border-gray-300 pb-2 mb-3">Experience</h2>
+          <ul className="list-disc list-inside whitespace-pre-line">
+            {toListItems(data.experience).length > 0
+              ? toListItems(data.experience).map((item, idx) => <li key={idx}>{item}</li>)
+              : <li>Your work experience details here.</li>}
+          </ul>
+        </section>
 
-      {/* Skills */}
-      <div>
-        <h2 className="text-lg font-semibold uppercase tracking-wide text-gray-800 border-b border-gray-200 pb-1">Skills</h2>
-        <p className="mt-2 text-sm whitespace-pre-line">
-          {data.skills || 'List of technical and soft skills.'}
-        </p>
-      </div>
+        <section>
+          <h2 className="text-xl font-bold border-b border-gray-300 pb-2 mb-3">Education</h2>
+          <ul className="list-disc list-inside whitespace-pre-line">
+            {toListItems(data.education).length > 0
+              ? toListItems(data.education).map((item, idx) => <li key={idx}>{item}</li>)
+              : <li>Your education background here.</li>}
+          </ul>
+        </section>
+      </main>
     </div>
   );
 }
